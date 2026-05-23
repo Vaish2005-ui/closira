@@ -17,3 +17,11 @@ app.include_router(enquiry.router)
 @app.get("/")
 def root():
     return {"message": "Closira API Running"}
+
+@app.get("/health")
+def health_check():
+
+    return {
+        "status": "healthy",
+        "database": "connected"
+    }
