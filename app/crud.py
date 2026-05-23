@@ -5,7 +5,7 @@ from .sop_matcher import match_sop
 def create_enquiry(db: Session, enquiry: schemas.EnquiryCreate):
     def process_enquiry(db: Session, enquiry_id: int):
 
-    enquiry = db.query(models.Enquiry).filter(
+       enquiry = db.query(models.Enquiry).filter(
         models.Enquiry.id == enquiry_id
     ).first()
 

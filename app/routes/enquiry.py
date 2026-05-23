@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-
+from fastapi import APIRouter, Depends, BackgroundTasks
 from ..database import SessionLocal
 from .. import schemas, crud
 
 router = APIRouter()
 
 
-# Database Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -19,6 +18,16 @@ def get_db():
 @router.post("/enquiry", response_model=schemas.EnquiryResponse)
 def create_new_enquiry(
     enquiry: schemas.EnquiryCreate,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db)
 ):
-    return crud.create_enquiry(db, enquiry)
+
+    created_enquiry = crud.create_enquiry(db, enquiry)
+
+    background_tasks.add_task(
+        crud.process_enquiry,
+        db,
+        created_enquiry.id
+    )
+
+    return created_enquiry
