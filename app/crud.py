@@ -4,6 +4,11 @@ from .sop_matcher import match_sop
 
 def create_enquiry(db: Session, enquiry: schemas.EnquiryCreate):
     def process_enquiry(db: Session, enquiry_id: int):
+       def get_enquiry_history(db: Session, enquiry_id: int):
+
+        return db.query(models.Enquiry).filter(
+            models.Enquiry.id == enquiry_id
+        ).first()
 
        enquiry = db.query(models.Enquiry).filter(
         models.Enquiry.id == enquiry_id
@@ -36,3 +41,8 @@ def create_enquiry(db: Session, enquiry: schemas.EnquiryCreate):
     db.refresh(db_enquiry)
 
     return db_enquiry
+def get_enquiry_history(db: Session, enquiry_id: int):
+
+    return db.query(models.Enquiry).filter(
+        models.Enquiry.id == enquiry_id
+    ).first()

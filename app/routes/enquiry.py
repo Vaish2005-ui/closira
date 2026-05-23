@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends, BackgroundTasks
+from sqlalchemy.orm import Session
+
 from ..database import SessionLocal
 from .. import schemas, crud
 
@@ -31,3 +31,20 @@ def create_new_enquiry(
     )
 
     return created_enquiry
+
+
+@router.get(
+    "/enquiry/{enquiry_id}/history",
+    response_model=schemas.EnquiryHistory
+)
+def get_history(
+    enquiry_id: int,
+    db: Session = Depends(get_db)
+):
+
+    enquiry = crud.get_enquiry_history(db, enquiry_id)
+
+    if not enquiry:
+        return {"error": "Enquiry not found"}
+
+    return enquiry
