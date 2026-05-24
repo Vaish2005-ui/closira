@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.orm import Session
 
+from ....app import crud
+
 from ..database import SessionLocal
-from .. import schemas, crud
+from ....app import schemas
 
 router = APIRouter()
 
