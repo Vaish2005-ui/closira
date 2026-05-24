@@ -95,4 +95,4 @@ Real-time notifications
 Backend/frontend integration
 
 Author
-##Vaishnavi Falle
+Vaishnavi Falle
